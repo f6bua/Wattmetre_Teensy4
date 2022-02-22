@@ -4,7 +4,7 @@
 // Avec un Teensy 4.0 et un afficheur OLED de 1,3"
 // Pour des convertisseurs AD4318
 // Interface d'entrée des commandes sur le principe de la mesure en analogique sur A0
-// des LCD Keypad Shield pour Arduino Uno
+// des "LCD Keypad Shield" pour Arduino Uno
 // Entrée "Select" pour choisir le menu 1 2 ou 3 (Direct, Réfléchi ou ROS)
 // Entrée "Haut" et "Bas" pour choisir l'atténuation totale (ligne de mesure + l'atténuateur d'adaptation)
 // Puissance d'entrée utile sur un AD4318 0dBm et puissance max sur son entrée 12 dBm
