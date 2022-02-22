@@ -1,6 +1,24 @@
 //
-//
-//
+// Wattmètre UHF-SHF jusque 8 GHz
+// Adapté pour une utilisation 2,4 GHz
+// Avec un Teensy 4.0 et un afficheur OLED de 1,3"
+// Pour des convertisseurs AD4318
+// Interface d'entrée des commandes sur le principe de la mesure en analogique sur A0
+// des LCD Keypad Shield pour Arduino Uno
+// Entrée "Select" pour choisir le menu 1 2 ou 3 (Direct, Réfléchi ou ROS)
+// Entrée "Haut" et "Bas" pour choisir l'atténuation totale (ligne de mesure + l'atténuateur d'adaptation)
+// Puissance d'entrée utile sur un AD4318 0dBm et puissance max sur son entrée 12 dBm
+// Exemple: pour mesurer une puissance maxi de 100 W il faut atténuer de 50 dB
+//          avec une ligne atténuant de 30dB, il faudra rajouter un bouchon de 20 dB pour avoir une mesure correcte
+//          Ligne -30 dB + Bouchon -20dB   =   Atténuation totale -50dB
+//          Je peux envoyer 100W soit 50dBm pour une mesure à 0dBm soit 1mW
+// 
+//    Ligne   Bouchon   P Max
+//    30 dB     0 dB     1 W = 30 dBm
+//    30 dB    10 dB    10 W = 40 dBm
+//    30 dB    20 dB   100 W = 50 dBm
+//    30 dB    23 dB   200 W = 53 dBm           Les lignes étant limitées à 200 W, il faut s'arrêter là.
+
 
 #include <Arduino.h>
 #include <EEPROM.h>   
@@ -41,9 +59,9 @@ float f_ghz,  mmm,  ccc ;
 float voltage_CH_1, level_CH_1,  power_W_1, Return_Loss, RL_linear, SWR;
 float voltage_CH_2, level_CH_2,  power_W_2 ;
 
+
 // *********************************** Setup **********************************************************
 // =====================================================================================================
-
 void setup()
 {
 // Initialisation de l'afficheur I2C, OLED
@@ -71,7 +89,7 @@ void setup()
   oled.setCursor(0,6);
   oled.println("         by F6BUA");
    
-  delay(500);              // délai maintien de l'écran de démarrage pendant 4s
+  delay(4000);              // délai maintien de l'écran de démarrage pendant 4s
 
  freq_curve_nr = EEPROM.read(0);           // Récupération Courbe d'étalonnage mémorisée
     att_CH1 = EEPROM.read(1);                 // Récupération Atténuation Canal 1
