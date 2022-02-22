@@ -288,6 +288,7 @@ void display_power_CH_1()
   oled.print(" dBm");
   
   oled.setCursor(0,3);                                       // go to line #2
+  
   oled.print("Dir ");
   select_subunit_of_power_CH_1();
       
