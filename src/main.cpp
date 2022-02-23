@@ -511,7 +511,6 @@ void display_ReturnLoss_and_SWR()
   dtostrf( SWR, 3, 1,float_string);  
   oled.print(float_string);
 
-
   delay(1000);		// Ralentissement affichage page 3 
 }
 
@@ -548,7 +547,6 @@ void loop()
       calculate_power_CH_2();                  // Calcul
       calculate_ReturnLoss_and_SWR();
       display_ReturnLoss_and_SWR();            // Affichage du bilan des puissances
-      // delay(5000);
       select_menu();                           // et accès au menu      
      }
 
