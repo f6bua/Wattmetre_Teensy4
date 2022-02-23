@@ -1,6 +1,6 @@
 //
-// Wattmètre UHF-SHF jusque 8 GHz
-// Adapté pour une utilisation 2,4 GHz
+// Wattmètre UHF-SHF jusque 8 GHz basé sur un logiciel de DC5ZM + AI6PK
+// Adapté pour une utilisation jusque 2,4 GHz à P Max= 200W
 // Avec un Teensy 4.0 et un afficheur OLED de 1,3"
 // Pour des convertisseurs AD4318
 // Interface d'entrée des commandes sur le principe de la mesure en analogique sur A0
@@ -82,7 +82,7 @@ void setup()
   oled.set2X();
   oled.println(" Wattmetre");
  // oled.set1X();
-  oled.println("    2400");
+  oled.println("   2400");
   oled.set1X();
   oled.setCursor(0,5);
   oled.println("     Teensy 4.0");
@@ -91,15 +91,14 @@ void setup()
    
   delay(4000);              // délai maintien de l'écran de démarrage pendant 4s
 
- freq_curve_nr = EEPROM.read(0);           // Récupération Courbe d'étalonnage mémorisée
-    att_CH1 = EEPROM.read(1);                 // Récupération Atténuation Canal 1
-    att_CH2 = EEPROM.read(2);                 // Récupération Atténuation Canal 2
+ freq_curve_nr = EEPROM.read(0);              // Récupération Courbe d'étalonnage mémorisée
+    att_CH1 = EEPROM.read(1);                 // Récupération Atténuation mémorisée Canal "Direct"
+    att_CH2 = EEPROM.read(2);                 // Récupération Atténuation mémorisée Canal "Réfléchi"
     
  oled.clear();
-
 }
-// =========================================================================================================================
-// ******************************* FIN du SETUP() **************************************************************************
+// ======================================= FIN du SETUP() ==================================================================================
+// *****************************************************************************************************************************************
 
 
 // ================================= Choix du menu Direct, réfléchi et ROS-mètre ===========================================
@@ -508,7 +507,7 @@ void display_ReturnLoss_and_SWR()
   oled.print(" dB");
 
   oled.setCursor(0,7);      
-  oled.print("SWR = ");
+  oled.print("SWR =   ");
   dtostrf( SWR, 3, 1,float_string);  
   oled.print(float_string);
 
@@ -564,20 +563,21 @@ void loop()
 
 /*
  void loop() {
-   keyPress = analogRead(0);
+   keyPress = analogRead(0)/10;
    oled.setCursor(0, 1);
   oled.print("in: ");
   oled.print(keyPress);
   oled.print(" ");
-   if(keyPress < 65){
+
+   if(keyPress < 6){
     oled.print("Right     ");
-  } else if(keyPress < 221){
+  } else if(keyPress < 22){
     oled.print("Up      ");
-  } else if(keyPress < 395){
+  } else if(keyPress < 39){
     oled.print("Down    ");
-  } else if(keyPress < 602){
+  } else if(keyPress < 60){
     oled.print("Left   ");
-  } else if(keyPress < 873){
+  } else if(keyPress < 87){
     oled.print("Select ");
   } else {
     oled.print("No btn");
