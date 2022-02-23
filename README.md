@@ -7,9 +7,9 @@ Création d'un wattmètre UHF et SHF utilisant:
 - associé à un afficheur OLED 1.3" en version I2C.
 - avec 5 touches cablées comme sur les LCD_Keypad_Shield
 
-Entrée "Select" pour choisir le menu 1 2 ou 3 (Direct, Réfléchi ou ROS)
+Entrée "Select" pour choisir le menu 1, 2 ou 3 (Direct, Réfléchi ou ROS)
 Entrée "Haut" et "Bas" pour choisir l'atténuation totale (ligne de mesure + l'atténuateur d'adaptation)
-Puissance d'entrée utile sur un AD4318 0dBm et puissance max sur son entrée 12 dBm
+Puissance d'entrée utile sur un AD4318 est de 0dBm et puissance max sur son entrée 12 dBm
 
  Exemple: pour mesurer une puissance maxi de 100W il faut atténuer de 50 dB pour avoir 0dBm soit 1mW à mesurer
           avec une ligne atténuant de 30dB, il faudra rajouter un bouchon de 20 dB pour avoir une mesure correcte
