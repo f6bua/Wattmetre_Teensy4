@@ -7,17 +7,26 @@
 // des "LCD Keypad Shield" pour Arduino Uno
 // Entrée "Select" pour choisir le menu 1 2 ou 3 (Direct, Réfléchi ou ROS)
 // Entrée "Haut" et "Bas" pour choisir l'atténuation totale (ligne de mesure + l'atténuateur d'adaptation)
-// Puissance d'entrée utile sur un AD4318 0dBm et puissance max sur son entrée 12 dBm
+// Entrée "Droite" et "Gauche" pour choisir le bande de fréquence la mieux adaptée
+//
+// Puissance d'entrée utile sur un AD4318 < 0dBm et puissance max < 12 dBm
 // Exemple: pour mesurer une puissance maxi de 100 W il faut atténuer de 50 dB
 //          avec une ligne atténuant de 30dB, il faudra rajouter un bouchon de 20 dB pour avoir une mesure correcte
 //          Ligne -30 dB + Bouchon -20dB   =   Atténuation totale -50dB
 //          Je peux envoyer 100W soit 50dBm pour une mesure à 0dBm soit 1mW
 // 
-//    Ligne   Bouchon   P Max
-//    30 dB     0 dB     1 W = 30 dBm
-//    30 dB    10 dB    10 W = 40 dBm
-//    30 dB    20 dB   100 W = 50 dBm
-//    30 dB    23 dB   200 W = 53 dBm           Les lignes étant limitées à 200 W, il faut s'arrêter là.
+//    Ligne      Bouchon         P Mesurable       P Maximum tolérable
+//    20 dB         Sans       100 mW = 20 dBm      < 32 dBm = 2 W
+//    20 dB       10 dB           1 W = 30 dBm      < 42 dBm = 20 W
+//    20 dB       20 dB          10 W = 40 dBm      < 52 dBm = 200 W
+//    20 dB       30 dB         100 W = 50 dBm      < 200 W
+//    20 dB       33 dB         200 W = 53 dBm      < 200 W          Les lignes étant limitées à 200 W, il faut s'arrêter là.
+//
+//    Ligne      Bouchon         P Mesurable       P Maximum tolérable
+//    30 dB         Sans          1 W = 30 dBm      < 42 dBm = 20 W
+//    30 dB        10 dB         10 W = 40 dBm      < 52 dBm = 200 W
+//    30 dB        20 dB        100 W = 50 dBm      < 200 W
+//    30 dB        23 dB        200 W = 53 dBm      < 200 W           Les lignes étant limitées à 200 W, il faut s'arrêter là.
 
 
 #include <Arduino.h>
@@ -29,7 +38,7 @@
 #include "SSD1306AsciiWire.h"
 #define I2C_ADDRESS 0x3C  // 0x3C ou 0x78 
 #define RST_PIN -1
-SSD1306AsciiWire oled;    // 
+SSD1306AsciiWire oled;    // Simplification d'accès à l'afficheur OLED
 
 #define LEFT 1                                            // define keys
 #define RIGHT 2
@@ -40,7 +49,7 @@ SSD1306AsciiWire oled;    //
 
 int keyPress;
 
-//-------------------------------------- custom chacters made using   https://omerk.github.io/oledchargen
+//------ custom chacters made using   https://omerk.github.io/oledchargen  ???????????????????????????
 
 byte char_up_down[8]    = {0b00100,0b01010,0b10001,0b00000,0b10001,0b01010,
                            0b00100,0b00000};
@@ -317,14 +326,14 @@ void display_power_CH_1()
   dtostrf(att_CH1,2,0,float_string);       
   oled.print(float_string);
   oled.print("dB ");
-  oled.write(byte(0));                                       // custom made char_up_down
+//  oled.write(byte(0));                                       // custom made char_up_down
 
   oled.setCursor(0,7);
   oled.print("Bde freq = ");
   dtostrf(f_ghz,3,1,float_string);   
   oled.print(float_string);
   oled.print(" GHz ");
-  oled.write(byte(1));                                       // custom made char_left_right
+//  oled.write(byte(1));                                       // custom made char_left_right
 
   delay(500);
 
@@ -462,7 +471,7 @@ void display_power_CH_2()
   dtostrf(att_CH2,2,0,float_string);       
   oled.print(float_string);
   oled.print("dB ");
-  oled.write(byte(0));                                       // custom made char_up_down
+//  oled.write(byte(0));                                       // custom made char_up_down
 
   
   oled.setCursor(0,7);
@@ -470,7 +479,7 @@ void display_power_CH_2()
   dtostrf(f_ghz,3,1,float_string);   
   oled.print(float_string);
   oled.print(" GHz ");
-  oled.write(byte(1));                                       // custom made char_left_right
+//  oled.write(byte(1));                                       // custom made char_left_right
 
   delay(500);
   
