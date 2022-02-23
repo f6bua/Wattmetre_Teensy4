@@ -2,7 +2,7 @@
 // Wattmètre UHF-SHF jusque 8 GHz basé sur un logiciel de DC5ZM + AI6PK
 // Adapté pour une utilisation jusque 2,4 GHz à P Max= 200W
 // Avec un Teensy 4.0 et un afficheur OLED de 1,3"
-// Pour des convertisseurs AD4318
+// Pour des convertisseurs AD 8318 https://www.analog.com/en/products/ad8318.html
 // Interface d'entrée des commandes sur le principe de la mesure en analogique sur A0
 // des "LCD Keypad Shield" pour Arduino Uno
 // Entrée "Select" pour choisir le menu 1 2 ou 3 (Direct, Réfléchi ou ROS)
