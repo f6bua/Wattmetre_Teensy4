@@ -1,4 +1,4 @@
-// V1.0 du 23/02/2022
+// V2.0 du 23/02/2022
 // Wattmètre UHF-SHF jusque 8 GHz basé sur un logiciel de DC5ZM + AI6PK
 // Adapté pour une utilisation jusque 2,4 GHz à P Max= 200W
 // Avec un Teensy 4.0 et un afficheur OLED de 1,3"
