@@ -23,8 +23,8 @@ Puissance d'entrée utile sur un AD4318 0dBm et puissance max sur son entrée 12
 -    30 dB,    10 dB,   10 W = 40 dBm
 -    30 dB,    20 dB,   100 W = 50 dBm
 -    30 dB,    23 dB,   200 W = 53 dBm           Les lignes étant limitées à 200 W, il faut s'arrêter là.
-- 
--    Ligne   Bouchon   P Max Mesurable
+ 
+-    Ligne,    Bouchon,    P Max Mesurable
 -    20 dB    sans    100 mW = 20 dBm
 -    20 dB    10 dB     1 W = 30 dBm
 -    20 dB    20 dB    10 W = 40 dBm
