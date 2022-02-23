@@ -30,8 +30,8 @@ Puissance d'entrée utile sur un AD4318 0dBm et puissance max sur son entrée 12
 -    20 dB,    30 dB,   100 W = 50 dBm 
 
 Le logiciel se paramètre pour lui indiquer l'Atténuation Totale et la Fréquence, pour afficher directement les valeurs de 
-  Puissance Directe,
-  Puissance réfléchie, 
-  Return Loss et ROS
+  - Puissance Directe,
+  - Puissance réfléchie, 
+  - Return Loss et ROS
 
 Le tout écrit pour édition par Visual Studio Code avec PlatfomIO
