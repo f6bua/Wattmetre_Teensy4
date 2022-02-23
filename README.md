@@ -16,8 +16,8 @@ Puissance d'entrée utile sur un AD4318 0dBm et puissance max sur son entrée 12
           Ligne -30 dB + Bouchon -20dB   =   "Atténuation totale" -50dB
           Je peux envoyer 100W soit 50dBm pour une mesure à 0dBm soit 1mW
           
-// Soit avec ces combinaisons:
-//    Ligne   Bouchon   P Max Mesurable
+- Soit avec ces combinaisons:
+-    Ligne   Bouchon   P Max Mesurable
 // ---------------------------------------
 //    30 dB    sans      1 W = 30 dBm
 //    30 dB    10 dB    10 W = 40 dBm
