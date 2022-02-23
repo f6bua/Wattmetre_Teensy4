@@ -82,12 +82,12 @@ void setup()
   oled.set2X();
   oled.println(" Wattmetre");
  // oled.set1X();
-  oled.println("  2400");
+  oled.println("    2400");
   oled.set1X();
   oled.setCursor(0,5);
-  oled.println("       Teensy 4.0");
+  oled.println("     Teensy 4.0");
   oled.setCursor(0,6);
-  oled.println("         by F6BUA");
+  oled.println("     par  F6BUA");
    
   delay(4000);              // délai maintien de l'écran de démarrage pendant 4s
 
@@ -102,7 +102,7 @@ void setup()
 // ******************************* FIN du SETUP() **************************************************************************
 
 
-// ================================= menu 1+2 ==============================================================================
+// ================================= Choix du menu Direct, réfléchi et ROS-mètre ===========================================
 void select_menu()
 {
   key_voltage = analogRead(A0)/10;            // div by 10 because key_voltage is type byte (0->255)
@@ -119,6 +119,7 @@ void select_menu()
   KEY = NONE;
 }
 
+// ============= Table des paramètres de calibration en fonction de la fréquence =======================
 // -----------------------------------------------------------------------------------------------------
 void AD8318_use_curve_0ghz9()
 {   mmm = 0.025;                                      // values for straight line equation: mmm = slope
@@ -168,6 +169,7 @@ void AD8318_use_curve_8ghz0()
     error_limit_HIGH =  0;
 }
 
+// ================================= Choix de la table: Direct, réfléchi et ROS-mètre ===========================================
 // -----------------------------------------------------------------------------------------------------   
 void select_calibration_curve()
 {
@@ -198,7 +200,7 @@ void select_calibration_curve()
   KEY = NONE;    
 } 
 
-// ============================================================================================= menu 1
+// ================================== Menu Direct, Ajustement par le clavier 5 touches =========================================================== 
 void select_attenuator_CH_1()
 {
   key_voltage = analogRead(A0)/10;                    // check KEY
@@ -233,7 +235,7 @@ void select_attenuator_CH_1()
   }
 }
 
-// -----------------------------------------------------------------------------------------------------
+// ---------------------------------Lecture et Calcul de la valeur "Directe" ---------------------------------------------
 void read_output_CH_1()
 { 
     voltage_CH_1  =  analogRead(A1);                           // read 1x
@@ -294,7 +296,7 @@ void select_subunit_of_power_CH_1()                    // select unit: W, mW, µ
     }
 }    
 
-// -----------------------------------------------------------------------------------------------------
+// ----------------------------------   Affichage du menu "Direct"  -------------------------------------------------------------------
 void display_power_CH_1()
 { 
   oled.clear();
@@ -332,7 +334,7 @@ void display_power_CH_1()
 }
 
 
-// ============================================================================================= menu 2
+// ===================================  Menu "Réfléchi" ========================================================== 
 void select_attenuator_CH_2()
 {
   key_voltage = analogRead(A0)/10;                           // check KEY
@@ -423,7 +425,7 @@ void select_subunit_of_power_CH_2()                                      // sele
       oled.print(" is out of range  ");
     }    
 }
-// ============================================================================================= menu 3
+// =================================  Inversion des valeurs si le cablage est inversé  =========================== 
 void calculate_ReturnLoss_and_SWR()
 {   
   Return_Loss = level_CH_1 - level_CH_2;
@@ -440,7 +442,7 @@ void calculate_ReturnLoss_and_SWR()
   SWR = (RL_linear+1)/(RL_linear-1);
 }
 
-// -----------------------------------------------------------------------------------------------------
+// ---------------------------------  Affichage du menu "Réfléchi"  --------------------------------------------------------------------
 void display_power_CH_2()
 { 
   oled.clear();
@@ -457,7 +459,7 @@ void display_power_CH_2()
 
  oled.set1X();     
   oled.setCursor(0,6);    
-  oled.print(" ATT totale = ");  
+  oled.print("ATT totale = ");  
   dtostrf(att_CH2,2,0,float_string);       
   oled.print(float_string);
   oled.print("dB ");
@@ -478,63 +480,45 @@ void display_power_CH_2()
 }
 
 
-// -----------------------------------------------------------------------------------------------------
+// ================================= Menu ROS-mètre ===========================================
 void display_ReturnLoss_and_SWR()
 { 
-  /*
+
   oled.clear();
+ oled.set2X();
+
   oled.setCursor(0,0);                                                 // 1ère Ligne
-  oled.print("1 Forward = ");   
-  dtostrf(level_CH_1,3,0,float_string);                               //convert float to string   
-  oled.print(float_string);
-  oled.print("dBm ");
-  */
-  oled.clear();
-  oled.setCursor(0,0);                                                 // 1ère Ligne
-  oled.set2X();
-  //oled.print(" ");
   oled.print("Di ");   
   dtostrf(level_CH_1,3,0,float_string);                               //convert float to string   
   oled.print(float_string);
   oled.print("dBm ");
   
-  /*
-  oled.setCursor(0,1);                                    // 2ème Ligne
-  oled.print("2 Reverse = ");     
-  dtostrf(level_CH_2,3,0,float_string);         //convert float to string 
-  oled.print(float_string);
-  oled.print("dBm ");
-  */
-  oled.setCursor(0,2);                                    // 2ème Ligne
+  oled.setCursor(0,3);                                    // 2ème Ligne
   oled.print("Re ");     
   dtostrf(level_CH_2,3,0,float_string);         //convert float to string 
   oled.print(float_string);
   oled.print("dBm ");
 
-////////////"####################";  
-
+ 
   oled.set1X();
-  oled.setCursor(0,5);    
-  oled.print("Return Loss = ");
-  dtostrf(Return_Loss,3,0,float_string);                              //convert float to string
+  oled.setCursor(0,6);    
+  oled.print("RL  =       ");
+  dtostrf(Return_Loss,4,0,float_string);                              //convert float to string
   oled.print(float_string);
   oled.print(" dB");
 
   oled.setCursor(0,7);      
-  oled.print("     SWR    = ");
+  oled.print("SWR = ");
   dtostrf( SWR, 3, 1,float_string);  
   oled.print(float_string);
 
-  if((level_CH_1 -att_CH1) < error_limit_LOW || (level_CH_1 -att_CH1) > error_limit_HIGH)
-      { delay(300); oled.setCursor(0,0); oled.print(""); }    
 
-  if((level_CH_2 - att_CH2) < error_limit_LOW || (level_CH_2 - att_CH2) > error_limit_HIGH)
-      { delay(300); oled.setCursor(0,1); oled.print("     "); }
-
-  delay(500);		// Ralentissement affichage page 3 pour éviter le papillotement à faible luminosité.
+  delay(1000);		// Ralentissement affichage page 3 
 }
 
-// ======================================================= LOOP() ========================================================================
+
+// **************************************************************************************************************
+// ================================= Loop ======================================================================= 
 void loop()
 {   
     if(display_menu_nr == 1)
@@ -565,10 +549,18 @@ void loop()
       calculate_power_CH_2();                  // Calcul
       calculate_ReturnLoss_and_SWR();
       display_ReturnLoss_and_SWR();            // Affichage du bilan des puissances
+      // delay(5000);
       select_menu();                           // et accès au menu      
      }
 
 } 
+
+// =====================================  Fin Loop  ===========================================================================
+// ***************************************************************************************************************************
+
+// ===================================== Pogramme Loop alternatif pour le paramètrage de la lecture des boutons ===============
+// ====== Lecture et affichage sur l'afficheur OLED de la valeur rendue par les boutons 
+//        pour le réglage des fourchettes d'identification des touches  ==========
 
 /*
  void loop() {
